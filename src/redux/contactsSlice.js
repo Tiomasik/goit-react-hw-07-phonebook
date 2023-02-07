@@ -3,24 +3,32 @@ import { createSlice } from "@reduxjs/toolkit"
 import { fetchAll, addContact, deleteContact } from "./operations";
 
 const contactsInitialState = {
-  contacts: [],
+  contacts: {
+    items: [],
+    isLoading: false,
+    error: null,
+  },
   filter: '',
-  isLoading: false,
-  error: null,
 }
 
 const handlePending = (state) => {
   return {
     ...state,
-    isLoading: true
+    contacts: {
+      ...state.contacts,
+      isLoading: true,
+    }
   }
 };
 
 const handleRejected = (state, action) => {
   return {
     ...state,
-    isLoading: false,
-    error: action.payload
+    contacts: {
+      ...state.contacts,
+      isLoading: false,
+      error: action.payload,
+    }
   }
 };
 
@@ -41,9 +49,11 @@ const contactsSlice = createSlice({
     [fetchAll.fulfilled](state, action) {
       return {
         ...state,
-        isLoading: false,
-        error: null,
-        contacts: [...action.payload],
+        contacts: {
+          isLoading: false,
+          error: null,
+          items: [...action.payload],
+        }
       }
     },
     [fetchAll.rejected]: handleRejected,
@@ -52,21 +62,25 @@ const contactsSlice = createSlice({
     [addContact.fulfilled](state, action) {
       return {
         ...state,
-        isLoading: false,
-        error: null,
-        contacts: [...state.contacts, action.payload],
+        contacts: {
+          isLoading: false,
+          error: null,
+          items: [...state.contacts.items, action.payload],
+        }
       }
     },
     [addContact.rejected]: handleRejected,
 
     [deleteContact.pending]: handlePending,
     [deleteContact.fulfilled](state, action) {
-      const newContacts = state.contacts.filter(contact => contact.id !== action.payload.id)
+      const newContacts = state.contacts.items.filter(contact => contact.id !== action.payload.id)
       return {
         ...state,
-        isLoading: false,
-        error: null,
-        contacts: newContacts,
+        contacts: {
+          isLoading: false,
+          error: null,
+          items: newContacts,
+        }
       }
     },
     [deleteContact.rejected]: handleRejected,

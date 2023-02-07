@@ -1,13 +1,13 @@
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+
+import { gettIsLoading, getError } from "redux/selectors";
+import { fetchAll } from "redux/operations";
 import Form from './Form/Form';
 import { ContactList } from './ContactList/ContactList'
 import Filter from './Filter/Filter'
 import { AppBar } from './AppBar.styled'
-
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { fetchAll } from "redux/operations";
-import { useSelector } from "react-redux";
-import { gettIsLoading, getError } from "redux/selectors";
 import  Loader  from  '../components/Loader/Loader'
 
 
