@@ -1,11 +1,9 @@
-// import { nanoid } from 'nanoid'
-
 import { Formik, Field, ErrorMessage  } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getContacts } from "redux/selectors";
 
+import { getContacts } from "redux/selectors";
 import { StyleForm } from './Form.styled'
 import { addContact } from "redux/operations";
 
